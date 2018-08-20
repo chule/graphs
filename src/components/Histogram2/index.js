@@ -95,15 +95,7 @@ class Histogram extends Component {
         return (
 
             <svg width={svgDimensions.width} height={svgDimensions.height}>
-                {/* <BarChart
-                    scales={{ xScale, yScale }}
-                    margin={margin}
-                    data={histogram(all)}
-                    //maxValue={maxValue}
-                    svgDimensions={svgDimensions}
-                    width={width}
-                    height={height}
-                /> */}
+
                 <BarPath
                     scales={{ xScale, yScale }}
                     margin={margin}
@@ -116,6 +108,7 @@ class Histogram extends Component {
                     redrawAll={this.props.redrawAll} />
 
                 />
+
                 <Axes
                     scales={{ xScale, yScale }}
                     margin={margin}
@@ -123,6 +116,7 @@ class Histogram extends Component {
                     width={width}
                     height={height}
                 />
+                
             </svg>
         )
     }
