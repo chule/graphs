@@ -2,8 +2,8 @@ import React from 'react'
 import _ from 'lodash'
 
 import LineChart from './LineChart'
-import BarChart from './BarChart'
-import ScatterPlot from './ScatterPlot'
+// import BarChart from './BarChart'
+// import ScatterPlot from './ScatterPlot'
 
 import Histogram from './Histogram2'
 import store from './store'
@@ -49,7 +49,7 @@ class EntireChart extends React.Component {
                         redrawAll={this.redrawAll} />
                 </div>
 
-                <div className='chart-group'>
+                {/* <div className='chart-group'>
                     <BarChart
                         id='bar-chart'
                         dimension={store.value}
@@ -67,7 +67,7 @@ class EntireChart extends React.Component {
                         xAccessor={d => d.key[0]}
                         yAccessor={d => d.key[1]}
                         redrawAll={this.redrawAll} />
-                </div>
+                </div> */}
 
 
 

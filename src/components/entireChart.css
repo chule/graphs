@@ -131,3 +131,8 @@ li a.active {
   fill: #eee;
   stroke: #666;
 }
+
+.selection {
+  fill: #B42436;
+  /* stroke: #B42436; */
+}

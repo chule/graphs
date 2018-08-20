@@ -9,7 +9,7 @@ class BarPath extends Component {
 
     componentDidMount() {
 
-        const { margin, data, scales, height, width } = this.props
+        const { height, width } = this.props
 
         function resizePath(d) {
             const e = +(d.type === 'e');
@@ -42,13 +42,11 @@ class BarPath extends Component {
     }
 
     onBrush = () => {
-        const { margin, data, scales, height, width } = this.props
-        const { xScale, yScale } = scales
+        const { scales} = this.props
+        const { xScale } = scales
 
         if (d3.event.selection === null) {
             this.props.dimension.filterAll();
-            // d3.select(this.brush).selectAll('.brush-handle')
-            // .style('display', 'none')
 
         } else {
 
@@ -105,8 +103,6 @@ class BarPath extends Component {
             }
             return path.join('');
         }
-        //M0,325V307.71276595744683h9V325M132.6,325V179.7872340425532h9V325M265.2,325V0h9V325M397.8,325V69.14893617021275h9V325M530.4,325V200.53191489361703h9V325
-        console.log(this.state.brush)
 
         return (
             <g transform={`translate(${[margin.left, margin.top]})`}>
@@ -116,23 +112,9 @@ class BarPath extends Component {
                         </rect>
                     </clipPath>
                 }
-                {/* {data.map((d, i) => (
-                    <rect
-                        x={xScale(d.x0)}
-                        y={yScale(d.length)}
-                        width={xScale(d.x1) - xScale(d.x0) -1}
-                        height={height - yScale(d.length)}
-                        style={{
-                            fill: "darkred"
-                        }}
-
-                        key={i}
-                    />
-                ))} */}
-
 
                 <path className="background bar" fill='#ccc' d={barPath(groups)}> </path>
-                <path className="foreground bar" fill='darkred' clipPath="url(#clip)" d={barPath(groups)}> </path>
+                <path className="foreground bar" fill='#B42436' clipPath="url(#clip)" d={barPath(groups)}> </path>
                 <g ref={el => this.brush = el}> </g>
             </g>
         );

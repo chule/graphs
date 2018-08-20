@@ -5,20 +5,6 @@ import Chart from './chart'
 import store from './store'
 
 class LineChart extends React.Component{
-    // propTypes: {
-    //     id: React.PropTypes.string.isRequired,
-    //     dimension: React.PropTypes.object.isRequired,
-    //     group: React.PropTypes.object.isRequired,
-    //     yAccessor: React.PropTypes.func.isRequired
-    // },
-    // getDefaultProps() {
-    //     return {
-    //         margin: { top: 32, left: 32, bottom: 32, right: 32 },
-    //         width: 320,
-    //         height: 320,
-    //         xAccessor: d => d.key
-    //     };
-    // }
 
     chart = null
     

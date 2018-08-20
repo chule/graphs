@@ -77,7 +77,7 @@ class Histogram extends Component {
         histogram = d3.histogram()
             .value(d => d.value)
             .domain(xScale.domain())
-            .thresholds(5);
+            .thresholds(10);
 
         yScale = d3.scaleLinear()
             .domain([0, d3.max(histogram(all), d => d.length)])
