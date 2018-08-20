@@ -125,3 +125,9 @@ li a.active {
 .chart-group {
   display: inline-block;
 }
+
+
+.brush-handle {
+  fill: #eee;
+  stroke: #666;
+}

@@ -5,7 +5,7 @@ import LineChart from './LineChart'
 import BarChart from './BarChart'
 import ScatterPlot from './ScatterPlot'
 
-import Histogram from './Histogram2/index2'
+import Histogram from './Histogram2'
 import store from './store'
 
 import './entireChart.css'
@@ -28,7 +28,7 @@ class EntireChart extends React.Component {
 
     render() {
         return (
-            <div>
+            <div style={{width: '100%', height: '100%'}}>
                 <Histogram
                     id='histogram-chart'
                     dimension={store.value}

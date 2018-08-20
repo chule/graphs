@@ -1,76 +1,138 @@
 import React, { Component } from 'react'
-import BarChart from "./BarChart"
+//import BarChart from "./BarChart"
+import BarPath from "./BarPath"
 import Axes from './Axes'
-import * as d3 from "d3";
+import * as d3 from "d3"
 import ResponsiveWrapper from './ResponsiveWrapper'
-
+import store from '../store'
 
 class Histogram extends Component {
 
     state = {
-        margins: { top: 25, right: 15, bottom: 50, left: 35 },
+        margin: { top: 25, right: 15, bottom: 50, left: 35 },
         size: {},
-        xScale: d3
-            .scaleBand()
-            .domain(d3.range(0, this.props.data.length))
-            .range([0, Math.max(this.props.parentWidth, 300)]),
+        xScale: null,
+        yScale: null,
+        histogram: null,
+        svgDimensions: null,
+        all: this.props.group.all(),
+        width: null,
+        heigth: null
+    }
 
-        yScale: d3
-            .scaleLinear()
-            .domain([0, d3.max(this.props.data)])
-            .range([0, Math.max(this.props.parentHeight, 400)])
-    };
+    componentDidMount() {
+
+        let { group } = this.props
+
+        let redraw = () => {
+
+            const all = group.all().filter(d => d.value);
+
+            this.setState(() => ({
+                all
+            }))
+
+        }
+
+
+        redraw();
+
+        let chart = {
+            redraw
+        };
+
+        store.charts.push(chart);
+    }
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        let { xScale, yScale } = prevState;
 
-        xScale.domain(d3.range(0, nextProps.data.length));
-        yScale.domain([0, d3.max(nextProps.data)]);
+        let { xScale, yScale, margin, histogram, all } = prevState;
 
-        prevState = { ...prevState, xScale, yScale };
+        let {
+            //group,
+            // margin,
+            // width, height,
+            // x, y,
+            //xAccessor,
+            yAccessor,
+            //padding,
+            parentWidth,
+            parentHeight
+        } = nextProps;
+
+        const svgDimensions = {
+            width: Math.max(parentWidth, 400),
+            height: Math.max(parentHeight, 300)
+        }
+
+        let width = svgDimensions.width - margin.left - margin.right
+        let height = svgDimensions.height - margin.top - margin.bottom
+
+        let extent = d3.extent(all, yAccessor)
+
+        xScale = d3.scaleLinear()
+            .domain([Math.floor(extent[0]), Math.floor(extent[1])])
+            .range([0, width]);
+
+        histogram = d3.histogram()
+            .value(d => d.value)
+            .domain(xScale.domain())
+            .thresholds(5);
+
+        yScale = d3.scaleLinear()
+            .domain([0, d3.max(histogram(all), d => d.length)])
+            .range([height, 0]);
+
+
+        prevState = { ...prevState, xScale, yScale, histogram, svgDimensions, width, height };
         return prevState;
     }
 
     render() {
 
-        //const { xScale, yScale, margins } = this.state;
-
-        const svgDimensions = {
-            width: Math.max(this.props.parentWidth, 300),
-            height: Math.max(this.props.parentHeight, 200)
-        }
-
-        const margins = { top: 50, right: 20, bottom: 100, left: 60 }
-
-        const xScale = d3
-            .scaleBand()
-            .domain(d3.range(0, this.props.data.length))
-            .range([margins.left, svgDimensions.width - margins.right])
-
-        const yScale = d3
-            .scaleLinear()
-            .domain([0, d3.max(this.props.data)])
-            .range([svgDimensions.height - margins.bottom, margins.top])
+        const { xScale, yScale, margin, svgDimensions, histogram, all, width, height } = this.state
 
         return (
 
-
             <svg width={svgDimensions.width} height={svgDimensions.height}>
-                <BarChart
+                {/* <BarChart
                     scales={{ xScale, yScale }}
-                    margins={margins}
-                    data={this.props.data}
+                    margin={margin}
+                    data={histogram(all)}
                     //maxValue={maxValue}
                     svgDimensions={svgDimensions}
+                    width={width}
+                    height={height}
+                /> */}
+                <BarPath
+                    scales={{ xScale, yScale }}
+                    margin={margin}
+                    data={histogram(all)}
+                    //maxValue={maxValue}
+                    svgDimensions={svgDimensions}
+                    width={width}
+                    height={height}
+                    dimension={this.props.dimension}
+                    redrawAll={this.props.redrawAll} />
+
                 />
                 <Axes
                     scales={{ xScale, yScale }}
-                    margins={margins}
+                    margin={margin}
                     svgDimensions={svgDimensions}
+                    width={width}
+                    height={height}
                 />
             </svg>
         )
     }
+}
+
+Histogram.defaultProps = {
+    margin: { top: 32, left: 32, bottom: 32, right: 32 },
+    // width: 320,
+    // height: 320,
+    xAccessor: d => d.key
 }
 
 export default ResponsiveWrapper(Histogram)

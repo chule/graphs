@@ -22,7 +22,8 @@ class BarChart extends React.Component {
             margin,
             width, height,
             x, y,
-            xAccessor, yAccessor,
+            //xAccessor, 
+            yAccessor,
             padding
         } = this.props;
 
