@@ -151,7 +151,7 @@ class ScatterPlot extends React.Component {
 
 ScatterPlot.defaultProps = {
     margin: { top: 32, left: 32, bottom: 32, right: 32 },
-    width: 320,
+    width: 640,
     height: 320,
     //xAccessor: d => d.key
 }

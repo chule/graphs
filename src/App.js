@@ -14,7 +14,7 @@ class App extends Component {
     return (
 
       <div style={{ width: "50%", height: 400 }}>
-        <Histogram data={data} />
+        {/* <Histogram /> */}
         <EntireChart />
       </div>
 

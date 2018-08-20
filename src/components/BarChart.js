@@ -31,17 +31,18 @@ class BarChart extends React.Component {
         padding = padding || 1;
 
         const all = group.all();
+
         let extent = d3.extent(all, yAccessor)
 
 
         x = x || d3.scaleLinear()
-            .domain([Math.floor(extent[0]), Math.ceil(extent[1])])
+            .domain([Math.floor(extent[0]), Math.floor(extent[1])])
             .range([0, width]);
 
         const histogram = d3.histogram()
             .value(d => d.value)
             .domain(x.domain())
-            .thresholds(x.ticks(10));
+            .thresholds(5);
 
         y = y || d3.scaleLinear()
             .domain([0, d3.max(histogram(all), d => d.length)])
@@ -110,15 +111,15 @@ class BarChart extends React.Component {
         redraw();
 
         this.chart = {
-            margin,
-            width, height,
+            // margin,
+            // width, height,
             x, y,
-            xAxis, yAxis,
-            xAccessor, yAccessor,
-            xAxisGroup, yAxisGroup,
-            //bars,
-            padding,
-            brush, brushGroup,
+            // xAxis, yAxis,
+            // xAccessor, yAccessor,
+            // xAxisGroup, yAxisGroup,
+            // //bars,
+            // padding,
+            // brush, brushGroup,
             redraw
         };
 
